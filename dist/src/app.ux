@@ -1,0 +1,91 @@
+<style src="./app.css"></style>
+<script>
+import Taro, { Component as __BaseComponent, internal_safe_get, internal_get_original, internal_inline_style, handleLoopRef, genCompid, genLoopCompid, propsManager } from "./npm/@tarojs/taro-quickapp/index.js";
+
+import withWeapp from "./npm/@tarojs/with-weapp/index.js";
+
+// 如果需要在 h5 环境中开启 React Devtools
+// 取消以下注释：
+// if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
+//   require('nerv-devtools')
+// }
+
+@withWeapp({
+  onLaunch: function () {
+    console.log("onLaunch");
+  },
+  onShow() {
+    console.log('onShow');
+  }
+})
+class _App extends __BaseComponent {
+
+  config = {
+    pages: ['pages/index/index'],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    }
+  };
+
+  componentDidMount() {}
+
+  componentDidShow() {
+    this.__listenToSetNavigationBarEvent();
+  }
+
+  componentDidHide() {
+    this.__offListenToSetNavigationBarEvent();
+  }
+
+  componentDidCatchError() {}
+
+  // 在 App 类中的 render() 函数没有实际作用
+  // 请勿修改此函数
+
+  _createData() {}
+
+  hasComponentWillMount() {}
+
+  __listenToSetNavigationBarEvent() {
+    if (!Taro.eventCenter.callbacks['TaroEvent:setNavigationBar']) {
+      Taro.eventCenter.on('TaroEvent:setNavigationBar', params => {
+        if (params.title) {
+          this.$scope.$page.setTitleBar({
+            text: params.title
+          });
+        }
+
+        if (params.frontColor) {
+          this.$scope.$page.setTitleBar({
+            textColor: params.frontColor
+          });
+        }
+
+        if (params.backgroundColor) {
+          this.$scope.$page.setTitleBar({
+            backgroundColor: params.backgroundColor
+          });
+        }
+      });
+    }
+  }
+
+  __offListenToSetNavigationBarEvent() {
+    Taro.eventCenter.off('TaroEvent:setNavigationBar');
+  }
+
+}
+
+export default require('./npm/@tarojs/taro-quickapp/index.js').default.createApp(_App);
+Taro.initPxTransform({
+  "designWidth": 750,
+  "deviceRatio": {
+    "640": 1.17,
+    "750": 1,
+    "828": 0.905
+  }
+});
+</script>

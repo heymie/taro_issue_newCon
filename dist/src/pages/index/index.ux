@@ -1,0 +1,96 @@
+<import src='../../npm/@tarojs/components-qa/src/components/taro-page/index' name='taro-page'></import>
+<style src="./index.css"></style>
+<template>
+<taro-page pagepath='{{pagePath__temp}}'><div class='index'><text>Hello world!</text></div></taro-page>
+</template>
+<script>
+import Taro, { Component as __BaseComponent, internal_safe_get, internal_get_original, internal_inline_style, handleLoopRef, genCompid, genLoopCompid, propsManager } from "../../npm/@tarojs/taro-quickapp/index.js";
+import withWeapp from "../../npm/@tarojs/with-weapp/index.js";
+
+
+let page = {
+  onLoad() {
+    console.log('.............');
+  }
+};
+
+@withWeapp(page)
+class Index extends __BaseComponent {
+  static properties = {};
+  static privateTaroEvent = [];
+  $usedState = ["pagePath__temp"];
+
+  _constructor(props) {
+    super._constructor(props);
+  }
+
+  config = {
+    navigationBarTitleText: '首页'
+
+    // componentWillMount () { }
+
+    // componentDidMount () { }
+
+    // componentWillUnmount () { }
+
+    // componentDidShow () { }
+
+    // componentDidHide () { }
+
+  };_createData() {
+    this.__state = arguments[0] || this.state || {};
+    this.__props = arguments[1] || this.props || {};
+    const __isRunloopRef = arguments[2];
+    const __prefix = this.$prefix;
+    ;
+    const pagePath__temp = "/pages/index/index";
+    Object.assign(this.__state, {
+      pagePath__temp: pagePath__temp
+    });
+    return this.__state;
+  }
+  customComponents = [];
+  static $$componentPath = "pages/index/index";
+
+  hasComponentWillMount() {}
+
+  componentDidShow() {
+    this.__listenToSetNavigationBarEvent();
+  }
+
+  componentDidHide() {
+    this.__offListenToSetNavigationBarEvent();
+  }
+
+  __listenToSetNavigationBarEvent() {
+    if (!Taro.eventCenter.callbacks['TaroEvent:setNavigationBar']) {
+      Taro.eventCenter.on('TaroEvent:setNavigationBar', params => {
+        if (params.title) {
+          this.$scope.$page.setTitleBar({
+            text: params.title
+          });
+        }
+
+        if (params.frontColor) {
+          this.$scope.$page.setTitleBar({
+            textColor: params.frontColor
+          });
+        }
+
+        if (params.backgroundColor) {
+          this.$scope.$page.setTitleBar({
+            backgroundColor: params.backgroundColor
+          });
+        }
+      });
+    }
+  }
+
+  __offListenToSetNavigationBarEvent() {
+    Taro.eventCenter.off('TaroEvent:setNavigationBar');
+  }
+
+}
+
+export default require('../../npm/@tarojs/taro-quickapp/index.js').default.createComponent(Index, '/pages/index/index');
+</script>
